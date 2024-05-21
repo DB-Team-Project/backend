@@ -3,6 +3,7 @@ package project.dbproject.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import project.dbproject.dto.CategoryStoreDto;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -16,8 +17,7 @@ public class Store {
     @Column(name = "store_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     private String name;
@@ -46,8 +46,13 @@ public class Store {
         }
     }
 
-    public void addCategory(final Category category) {
-        this.category = category;
-        category.getStores().add(this);
+    public CategoryStoreDto toDto(){
+        return new CategoryStoreDto(
+                this.id,
+                this.name,
+                this.description,
+                this.image,
+                this.location
+        );
     }
 }
