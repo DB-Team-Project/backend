@@ -21,9 +21,18 @@ public class Review {
     private Member member;
 
     @Column(precision = 2, scale = 1)
-    private BigDecimal rating;
+    private BigDecimal rating = BigDecimal.ZERO;
 
     private String comment;
 
     private LocalDateTime reviewDate;
+
+    public void addStore(final Store store) {
+        this.store = store;
+        store.getReviews().add(this);
+    }
+    public void addMember(final Member member) {
+        this.member = member;
+        member.getReviews().add(this);
+    }
 }
