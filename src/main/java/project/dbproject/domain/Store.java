@@ -4,11 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import project.dbproject.dto.CategoryStoreDto;
+import project.dbproject.dto.LocationStoreDto;
+import project.dbproject.dto.StoreDto;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter @Setter
@@ -25,6 +28,10 @@ public class Store {
     private String description;
 
     private String location;
+
+    private Double latitude;
+
+    private Double longitude;
 
     private String image;
 
@@ -46,13 +53,34 @@ public class Store {
         }
     }
 
-    public CategoryStoreDto toDto(){
+    public CategoryStoreDto toCategoryDto(){
         return new CategoryStoreDto(
                 this.id,
                 this.name,
                 this.description,
                 this.image,
                 this.location
+        );
+    }
+
+    public StoreDto toStoreDto() {
+        return new StoreDto(
+                this.name,
+                this.description,
+                this.averageRating,
+                this.image,
+                this.location,
+                reviews.stream().map(Review::toDto).collect(Collectors.toList())
+        );
+    }
+
+    public LocationStoreDto toLocationDto() {
+        return new LocationStoreDto(
+                this.id,
+                this.name,
+                this.category.name(),
+                this.latitude,
+                this.longitude
         );
     }
 }

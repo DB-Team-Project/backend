@@ -14,8 +14,16 @@ import java.util.List;
 public class StoreService {
     private final StoreRepository storeRepository;
 
+
+    public Store getStoreById(final Long storeId) {
+        return storeRepository.findById(storeId);
+    }
+
     public List<Store> getAllStores() {
         return storeRepository.findAll();
     }
 
+    public List<Store> getStoresNearbyUser(final Double lat, Double lon, final Double distance) {
+        return storeRepository.findNearBy(lat, lon, distance);
+    }
 }
