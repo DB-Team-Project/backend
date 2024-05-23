@@ -1,7 +1,9 @@
 package project.dbproject.repository;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import lombok.Data;
 import org.springframework.stereotype.Repository;
 import project.dbproject.domain.Store;
 
@@ -30,8 +32,19 @@ public class StoreRepository {
 
     //카테고리별 조회
     public List<Store> findByCategoryName(final String categoryName) {
-        TypedQuery<Store> query = em.createQuery("SELECT s FROM Store s WHERE s.category.categoryName = :categoryName", Store.class);
+        TypedQuery<Store> query = em.createQuery("SELECT s FROM Store s WHERE s.category = :categoryName", Store.class);
         query.setParameter("categoryName", categoryName);
         return query.getResultList();
     }
+
+    public List<Store> findNearBy(final Double lat, Double lon, final Double distance) {
+
+        Query query = em.createQuery("select s from Store s where (6371 * acos(cos(radians(:latitude)) * cos(radians(s.latitude)) * cos(radians(s.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(s.latitude)))) < :distance", Store.class);
+        query.setParameter("latitude", lat);
+        query.setParameter("longitude", lon);
+        query.setParameter("distance", distance);
+
+        return query.getResultList();
+    }
+
 }
