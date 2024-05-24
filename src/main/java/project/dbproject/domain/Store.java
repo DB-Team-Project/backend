@@ -3,20 +3,18 @@ package project.dbproject.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import project.dbproject.dto.CategoryStoreDto;
-import project.dbproject.dto.LocationStoreDto;
-import project.dbproject.dto.StoreDto;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Store {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "store_id")
     private Long id;
 
@@ -51,36 +49,5 @@ public class Store {
             this.averageRating = totalRating.divide(
                     BigDecimal.valueOf(reviews.size()), MathContext.DECIMAL32);
         }
-    }
-
-    public CategoryStoreDto toCategoryDto(){
-        return new CategoryStoreDto(
-                this.id,
-                this.name,
-                this.description,
-                this.image,
-                this.location
-        );
-    }
-
-    public StoreDto toStoreDto() {
-        return new StoreDto(
-                this.name,
-                this.description,
-                this.averageRating,
-                this.image,
-                this.location,
-                reviews.stream().map(Review::toDto).collect(Collectors.toList())
-        );
-    }
-
-    public LocationStoreDto toLocationDto() {
-        return new LocationStoreDto(
-                this.id,
-                this.name,
-                this.category.name(),
-                this.latitude,
-                this.longitude
-        );
     }
 }

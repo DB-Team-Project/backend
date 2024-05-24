@@ -3,15 +3,16 @@ package project.dbproject.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import project.dbproject.dto.ReviewDto;
+import project.dbproject.dto.RequestReviewDto;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 public class Review {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "review_id")
     private Long id;
 
@@ -26,24 +27,32 @@ public class Review {
 
     private String comment;
 
-    private LocalDateTime reviewDate;
+    private String createdDateTime;
+
+    private String modifiedDateTime;
 
     public void addStore(final Store store) {
         this.store = store;
         store.getReviews().add(this);
     }
+
     public void addMember(final Member member) {
         this.member = member;
         member.getReviews().add(this);
     }
 
-    public ReviewDto toDto(){
-        return new ReviewDto(
-                this.id,
-                this.member.getUsername(),
-                this.rating.intValue(), // assuming this is valid conversion
-                this.comment,
-                this.reviewDate
-        );
+    public void updateReview(final RequestReviewDto reviewDto) {
+        if (reviewDto.getRating() != null) {
+            this.rating = reviewDto.getRating();
+        }
+        if (reviewDto.getComment() != null) {
+            this.comment = reviewDto.getComment();
+        }
+        if (reviewDto.getCreatedDate() != null) {
+            this.createdDateTime = reviewDto.getCreatedDate();
+        }
+        if (reviewDto.getModifiedDate() != null) {
+            this.modifiedDateTime = reviewDto.getModifiedDate();
+        }
     }
 }
