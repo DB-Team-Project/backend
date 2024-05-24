@@ -19,13 +19,17 @@ public class ReviewRepository {
         em.persist(review);
     }
 
+    public Review findById(final Long reviewId) {
+        return em.find(Review.class, reviewId);
+    }
+
     public List<Review> findAllReviewsByStoreId(final Long storeId) {
         TypedQuery<Review> query = em.createQuery("SELECT r FROM Review r WHERE r.store.id = :storeId", Review.class);
         query.setParameter("storeId", storeId);
         return query.getResultList();
     }
 
-    public void deleteReviewByMemberAndId(final Long reviewId, final Long memberId) {
+    public void deleteReview(final Long reviewId, final Long memberId) {
         Review review = em.find(Review.class, reviewId);
         if (review == null) {
             throw new IllegalArgumentException("Review with ID " + reviewId + " not found.");

@@ -2,6 +2,7 @@ package project.dbproject.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import project.dbproject.domain.Store;
 
 @Data
 @AllArgsConstructor
@@ -11,4 +12,12 @@ public class CategoryStoreDto {
     private String description;
     private String storeImage;
     private String location;
+
+    public CategoryStoreDto(final Store store) {
+        this.storeId = store.getId();
+        this.storeName = store.getName();
+        this.description = store.getDescription();
+        this.storeImage = store.getImage();
+        this.location = store.getLocation();
+    }
 }

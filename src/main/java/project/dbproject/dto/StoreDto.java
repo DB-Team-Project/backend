@@ -2,8 +2,10 @@ package project.dbproject.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import project.dbproject.domain.Store;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -14,5 +16,14 @@ public class StoreDto {
     private BigDecimal avgRating;
     private String storeImage;
     private String location;
-    private List<ReviewDto> reviews;
+    private List<ResponseReviewDto> reviews;
+
+    public StoreDto(final Store store) {
+        this.storeName = store.getName();
+        this.description = store.getDescription();
+        this.avgRating = store.getAverageRating();
+        this.storeImage = store.getImage();
+        this.location = store.getLocation();
+        this.reviews = new ArrayList<>();
+    }
 }
