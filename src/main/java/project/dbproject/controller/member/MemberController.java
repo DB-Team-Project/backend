@@ -39,9 +39,7 @@ public class MemberController {
         boolean isValid = memberService.validateMember(userId, password);
         if (isValid) {
             String token = generateToken();
-            System.out.println("token = " + token);
             tokenStore.put(userId, token);
-            System.out.println("tokenStore = " + tokenStore);
             return ResponseEntity.ok(new LoginResponse(token));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");

@@ -3,7 +3,6 @@ package project.dbproject.repository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
-import lombok.Data;
 import org.springframework.stereotype.Repository;
 import project.dbproject.domain.Store;
 
@@ -39,7 +38,7 @@ public class StoreRepository {
 
     public List<Store> findNearBy(final Double lat, Double lon, final Double distance) {
 
-        Query query = em.createQuery("select s from Store s where (6371 * acos(cos(radians(:latitude)) * cos(radians(s.latitude)) * cos(radians(s.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(s.latitude)))) < :distance", Store.class);
+        Query query = em.createQuery("select s from Store s where (6371000 * acos(cos(radians(:latitude)) * cos(radians(s.latitude)) * cos(radians(s.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(s.latitude)))) < :distance", Store.class);
         query.setParameter("latitude", lat);
         query.setParameter("longitude", lon);
         query.setParameter("distance", distance);
