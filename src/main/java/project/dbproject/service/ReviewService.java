@@ -20,25 +20,24 @@ public class ReviewService {
     private final StoreRepository storeRepository;
 
     public Long saveReview(final RequestReviewDto dto) {
-        // 멤버와 스토어 엔티티 찾기
         Member member = memberRepository.findById(dto.getMemberId());
         Store store = storeRepository.findById(dto.getStoreId());
 
-        // DTO에서 리뷰 엔티티 생성
         final Review review = dto.toEntity();
         review.addMember(member);
         review.addStore(store);
+        store.updateAverageRating();
 
-        // 리뷰 저장 및 ID 반환
         reviewRepository.save(review);
-
         return review.getId();
     }
 
     public Long updateReview(final Long reviewId, final RequestReviewDto dto) {
+        Store store = storeRepository.findById(dto.getStoreId());
         Review review = reviewRepository.findById(reviewId);
         if (review != null) {
             review.updateReview(dto);
+            store.updateAverageRating();
             return review.getId();
         }
         return null;
