@@ -37,7 +37,7 @@ jobs:
           path: build/libs/*.war
 
   deploy:
-    runs-on: linux-latest
+    runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
