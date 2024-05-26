@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: linux-latest
 
     steps:
       - uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
           path: build/libs/*.war
 
   deploy:
-    runs-on: windows-latest
+    runs-on: linux-latest
     needs: build
     environment:
       name: 'Production'
@@ -50,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: java-app
-      
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
