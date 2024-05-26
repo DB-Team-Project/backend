@@ -12,7 +12,9 @@ import project.dbproject.service.StoreService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "https://dbproject.azurewebsites.net")
 @RestController
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class LocationStoreController {
     private final StoreService storeService;
