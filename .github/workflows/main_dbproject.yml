@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: build/libs/*.war
+          path: build/libs/app.war
 
   deploy:
     runs-on: windows-latest
@@ -62,4 +62,4 @@ jobs:
         with:
           app-name: 'dbproject'
           slot-name: 'production'
-          package: '*.war'
+          package: 'app.war'
