@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:sqlserver://dbprojectserver.database.windows.net:1433;database=db2;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30
     username: byuntil@dbprojectserver
-    password: Asdf2002
+    password: 
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
