@@ -15,7 +15,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = "https://dbproject.azurewebsites.net")
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
