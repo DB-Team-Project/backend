@@ -17,9 +17,16 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '17'
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew clean build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
@@ -32,9 +39,6 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    permissions:
-      id-token: write #This is required for requesting the JWT
   
     steps:
       - name: Download artifact from build job
@@ -45,9 +49,7 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DE07508A95504338A1EA96904F6C1586 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F9E7DF7110DB4887AD8258E78DFEE7B9 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C6ED6F6834A241789F12C92FE16681A9 }}
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
