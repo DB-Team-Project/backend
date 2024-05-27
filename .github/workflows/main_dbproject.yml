@@ -1,4 +1,4 @@
-name: Build and deploy WAR app to Azure Web App - dpproject
+name: Build and deploy JAR app to Azure Web App - dbproject
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: java-app
-          path: build/libs/app.war
+          path: build/libs/dbproject-0.0.1-SNAPSHOT.jar
 
   deploy:
     runs-on: windows-latest
@@ -62,4 +62,4 @@ jobs:
         with:
           app-name: 'dbproject'
           slot-name: 'production'
-          package: 'app.war'
+          package: 'dbproject-0.0.1-SNAPSHOT.jar'
