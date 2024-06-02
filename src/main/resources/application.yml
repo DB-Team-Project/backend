@@ -1,19 +1,19 @@
 spring:
   datasource:
-    url: jdbc:sqlserver://dbprojectserver.database.windows.net:1433;database=db2;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30
-    username: ${{secrets.AZURE_USERNAME}}
-    password: ${{secrets.AZURE_PASSWORD}}
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.SQLServerDialect
-        format_sql: true
+      #        show_sql: true
+      format_sql: true
 
-# If you have multiple profiles, you can set active profile
-# spring:
-#   profiles:
-#     active: prod
+logging.level:
+  org.hibernate.SQL: debug
+  #  org.hibernate.type: trace #??? ?? 2.x, hibernate5
+  #  org.hibernate.orm.jdbc.bind: trace #??? ?? 3.x, hibernate6

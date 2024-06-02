@@ -8,7 +8,7 @@ import project.dbproject.dto.DeleteReviewRequestDto;
 import project.dbproject.dto.RequestReviewDto;
 import project.dbproject.service.ReviewService;
 
-@CrossOrigin(origins = "https://dbproject.azurewebsites.net")
+@CrossOrigin("http://localhost:53473")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

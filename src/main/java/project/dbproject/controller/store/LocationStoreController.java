@@ -12,7 +12,7 @@ import project.dbproject.service.StoreService;
 
 import java.util.List;
 
-@CrossOrigin(origins = "https://dbproject.azurewebsites.net")
+@CrossOrigin("http://localhost:53473")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

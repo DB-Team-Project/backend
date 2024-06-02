@@ -23,6 +23,11 @@ public class MemberService {
         memberRepository.save(member);
     }
 
+    public Long findMemberIdByMemberName(final String memberId) {
+        Optional<Member> member = memberRepository.findByUserId(memberId);
+        return member.map(Member::getId).orElse(null);
+    }
+
     public Optional<Member> findByMemberName(final String userId) {
         return memberRepository.findByUserId(userId);
     }

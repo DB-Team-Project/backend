@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.dbproject.dto.LoginRequestDto;
-import project.dbproject.dto.LoginResponse;
 import project.dbproject.dto.SignUpRequestDto;
 import project.dbproject.service.MemberService;
 
@@ -15,7 +14,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin(origins = "https://dbproject.azurewebsites.net")
+@CrossOrigin("http://localhost:53473")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class MemberController {
             memberService.save(member);
             return ResponseEntity.ok("success");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
         }
     }
 
@@ -38,11 +37,13 @@ public class MemberController {
     public ResponseEntity<?> login(@RequestBody LoginRequestDto loginDto) throws NoSuchAlgorithmException {
         String userId = loginDto.getUserId();
         String password = loginDto.getPassword();
-        boolean isValid = memberService.validateMember(userId, password);
-        if (isValid) {
-            String token = generateToken();
-            tokenStore.put(userId, token);
-            return ResponseEntity.ok(new LoginResponse(token));
+        boolean status = memberService.validateMember(userId, password);
+        if (status) {
+            //String token = generateToken();
+            //tokenStore.put(userId, token);
+            //return ResponseEntity.ok(new LoginResponse(token));
+            Long user_id = memberService.findMemberIdByMemberName(userId);
+            return ResponseEntity.status(HttpStatus.OK).body(user_id);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
         }
