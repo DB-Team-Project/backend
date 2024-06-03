@@ -37,9 +37,10 @@ public class ReviewService {
         final Review review = dto.toEntity();
         review.addMember(member);
         review.addStore(store);
-        store.updateAverageRating();
-
         reviewRepository.save(review);
+
+        store.updateAverageRating();
+        storeRepository.save(store);
         return review.getId();
     }
 
@@ -48,15 +49,24 @@ public class ReviewService {
         Review review = reviewRepository.findById(reviewId);
         if (review != null) {
             review.updateReview(dto);
+            reviewRepository.save(review);
             store.updateAverageRating();
+            storeRepository.save(store);
             return review.getId();
         }
         return null;
     }
 
     public void deleteReview(final Long reviewId, DeleteReviewRequestDto dto) {
-        Store store = storeRepository.findById(dto.getStoreId());
         reviewRepository.deleteReview(reviewId, dto.getMemberId());
+        Store store = storeRepository.findById(dto.getStoreId());
+
+        Review reviewToDelete = store.getReviews().stream()
+                .filter(review -> review.getId().equals(reviewId))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Review with ID " + reviewId + " not found in store's reviews list."));
+        store.getReviews().remove(reviewToDelete);
         store.updateAverageRating();
+        storeRepository.save(store);
     }
 }

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.dbproject.domain.Review;
 import project.dbproject.dto.DeleteReviewRequestDto;
 import project.dbproject.dto.RequestReviewDto;
 import project.dbproject.service.ReviewService;
@@ -25,12 +24,7 @@ public class ReviewController {
 
     @DeleteMapping("/review/{reviewId}")
     public ResponseEntity deleteReview(@PathVariable("reviewId") Long reviewId, @RequestBody DeleteReviewRequestDto deleteDto) {
-        Review review_ = reviewService.getReview(reviewId);
-        Long storeId = deleteDto.getStoreId();
-
         reviewService.deleteReview(reviewId, deleteDto);
-
-
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
