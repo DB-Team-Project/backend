@@ -26,11 +26,10 @@ public class ReviewController {
     @DeleteMapping("/review/{reviewId}")
     public ResponseEntity deleteReview(@PathVariable("reviewId") Long reviewId, @RequestBody DeleteReviewRequestDto deleteDto) {
         Review review_ = reviewService.getReview(reviewId);
-        Long storeId = review_.getStore().getId();
+        Long storeId = deleteDto.getStoreId();
 
-        reviewService.deleteReview(reviewId, deleteDto.getMemberId());
+        reviewService.deleteReview(reviewId, deleteDto);
 
-        storeService.updateAverageRating(storeId);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

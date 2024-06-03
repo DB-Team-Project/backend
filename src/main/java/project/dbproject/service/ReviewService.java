@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import project.dbproject.domain.Member;
 import project.dbproject.domain.Review;
 import project.dbproject.domain.Store;
+import project.dbproject.dto.DeleteReviewRequestDto;
 import project.dbproject.dto.RequestReviewDto;
 import project.dbproject.repository.MemberRepository;
 import project.dbproject.repository.ReviewRepository;
@@ -53,7 +54,9 @@ public class ReviewService {
         return null;
     }
 
-    public void deleteReview(final Long reviewId, final Long memberId) {
-        reviewRepository.deleteReview(reviewId, memberId);
+    public void deleteReview(final Long reviewId, DeleteReviewRequestDto dto) {
+        Store store = storeRepository.findById(dto.getStoreId());
+        reviewRepository.deleteReview(reviewId, dto.getMemberId());
+        store.updateAverageRating();
     }
 }
