@@ -1,5 +1,6 @@
 package project.dbproject.controller.member;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,9 +44,21 @@ public class MemberController {
             //tokenStore.put(userId, token);
             //return ResponseEntity.ok(new LoginResponse(token));
             Long user_id = memberService.findMemberIdByMemberName(userId);
-            return ResponseEntity.status(HttpStatus.OK).body(user_id);
+            String userName = memberService.findByMemberName(userId);
+            return ResponseEntity.status(HttpStatus.OK).body(new LoginDto(user_id, userName));
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
+        }
+    }
+
+    @Data
+    static class LoginDto {
+        private Long userId;
+        private String userName;
+
+        public LoginDto(Long userId, String userName) {
+            this.userId = userId;
+            this.userName = userName;
         }
     }
 

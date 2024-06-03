@@ -11,6 +11,8 @@ import project.dbproject.repository.MemberRepository;
 import project.dbproject.repository.ReviewRepository;
 import project.dbproject.repository.StoreRepository;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -18,6 +20,14 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
     private final StoreRepository storeRepository;
+
+    public Review getReview(final Long reviewId) {
+        return reviewRepository.findById(reviewId);
+    }
+
+    public List<Review> getReviewsByStoreId(final Long storeId) {
+        return reviewRepository.findAllReviewsByStoreId(storeId);
+    }
 
     public Long saveReview(final RequestReviewDto dto) {
         Member member = memberRepository.findById(dto.getMemberId());

@@ -7,6 +7,7 @@ import project.dbproject.domain.Store;
 import project.dbproject.repository.StoreRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -25,5 +26,13 @@ public class StoreService {
 
     public List<Store> getStoresNearbyUser(final Double lat, Double lon, final Double distance) {
         return storeRepository.findNearBy(lat, lon, distance);
+    }
+
+    public void updateAverageRating(Long storeId) {
+        Optional<Store> store = Optional.ofNullable(storeRepository.findById(storeId));
+        if (store.isPresent()) {
+            Store st = store.get();
+            st.updateAverageRating();
+        }
     }
 }

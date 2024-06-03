@@ -28,8 +28,8 @@ public class MemberService {
         return member.map(Member::getId).orElse(null);
     }
 
-    public Optional<Member> findByMemberName(final String userId) {
-        return memberRepository.findByUserId(userId);
+    public String findByMemberName(final String userId) {
+        return memberRepository.findByUserId(userId).get().getUserId();
     }
 
     public boolean validateMember(String userId, String password) {
