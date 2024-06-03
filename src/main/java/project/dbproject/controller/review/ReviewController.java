@@ -8,7 +8,7 @@ import project.dbproject.dto.DeleteReviewRequestDto;
 import project.dbproject.dto.RequestReviewDto;
 import project.dbproject.service.ReviewService;
 
-@CrossOrigin("http://localhost:53473")
+@CrossOrigin("http://10.0.2.15:8080")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

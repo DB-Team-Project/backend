@@ -14,7 +14,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin("http://localhost:53473")
+@CrossOrigin("http://10.0.2.15:8080")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

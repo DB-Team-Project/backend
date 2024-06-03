@@ -5,7 +5,6 @@ import lombok.Data;
 import project.dbproject.domain.Store;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,6 +23,7 @@ public class StoreDto {
         this.avgRating = store.getAverageRating();
         this.storeImage = store.getImage();
         this.location = store.getLocation();
-        this.reviews = new ArrayList<>();
+        this.reviews = store.getReviews().stream()
+                .map(ResponseReviewDto::new).toList();
     }
 }
