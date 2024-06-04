@@ -15,7 +15,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-@CrossOrigin("http://10.0.2.15:8080")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -26,11 +26,11 @@ public class MemberController {
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody SignUpRequestDto member) throws NoSuchAlgorithmException {
-        if (!memberService.validateMember(member.getUserId(), member.getPassword())) {
+        if (memberService.findByMemberName(member.getUserId()) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
+        } else {
             memberService.save(member);
             return ResponseEntity.ok("success");
-        } else {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("User already exists");
         }
     }
 

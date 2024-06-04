@@ -9,7 +9,7 @@ import project.dbproject.dto.RequestReviewDto;
 import project.dbproject.service.ReviewService;
 import project.dbproject.service.StoreService;
 
-@CrossOrigin("http://10.0.2.15:8080")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor

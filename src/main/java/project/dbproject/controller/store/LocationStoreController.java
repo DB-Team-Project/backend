@@ -12,7 +12,7 @@ import project.dbproject.service.StoreService;
 
 import java.util.List;
 
-@CrossOrigin("http://10.0.2.15:8080")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
